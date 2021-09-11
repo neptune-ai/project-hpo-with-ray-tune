@@ -42,4 +42,4 @@ def main(cfg, num_samples):
 
 
 if __name__ == "__main__":
-    main(cfg=config, num_samples=2)
+    main(cfg=config, num_samples=30)
