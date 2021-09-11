@@ -1,11 +1,12 @@
 import os
-from sklearn.metrics import accuracy_score
-import torch.nn.functional as F
+
 import neptune.new as neptune
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import torch.optim as optim
 from ray import tune
+from sklearn.metrics import accuracy_score
 from torch.utils.data import random_split
 
 from load_data import load_data, UnNormalize
