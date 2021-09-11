@@ -16,7 +16,7 @@ class UnNormalize(object):
         return tensor
 
 
-def load_data(data_dir="./data"):
+def load_data(data_dir):
     classes = ("plane", "car", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck")
 
     transform = transforms.Compose([
@@ -24,7 +24,7 @@ def load_data(data_dir="./data"):
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
 
-    with FileLock(os.path.expanduser("~/.data.lock")):
+    with FileLock(os.path.expanduser("{}.lock".format(data_dir))):
         train_set = torchvision.datasets.CIFAR10(
             root=data_dir, train=True, download=True, transform=transform)
 
