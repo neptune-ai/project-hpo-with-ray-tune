@@ -40,7 +40,7 @@ def test_best_model(run, best_trial):
     )
 
     test_loader = torch.utils.data.DataLoader(
-        test_set, batch_size=4, shuffle=False, num_workers=2)
+        test_set, batch_size=4, shuffle=False, num_workers=4)
 
     correct = 0
     total = 0

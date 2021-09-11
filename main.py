@@ -21,7 +21,7 @@ master_run = neptune.init(
 def main(cfg, num_samples):
     result = tune.run(
         tune.with_parameters(train_cifar),
-        resources_per_trial={"cpu": 2},
+        resources_per_trial={"cpu": 4},
         config=cfg,
         metric="loss",
         mode="min",
