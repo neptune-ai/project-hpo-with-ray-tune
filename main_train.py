@@ -50,7 +50,7 @@ def train_cifar(config, checkpoint_dir=None):
         optimizer.load_state_dict(optimizer_state)
 
     train_set, test_set, classes = load_data(
-        os.path.abspath("/home/kamil/Documents/neptune/project-hpo-with-ray-tune/data")
+        os.path.abspath("/abs/path/to/data")
     )
 
     test_abs = int(len(train_set) * 0.8)

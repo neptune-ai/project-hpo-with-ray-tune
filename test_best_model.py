@@ -36,7 +36,7 @@ def test_best_model(run, best_trial):
     best_trained_model.load_state_dict(model_state)
 
     _, test_set, _ = load_data(
-        os.path.abspath("/home/kamil/Documents/neptune/project-hpo-with-ray-tune/data")
+        os.path.abspath("/abs/path/to/data")
     )
 
     test_loader = torch.utils.data.DataLoader(
