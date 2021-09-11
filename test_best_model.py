@@ -1,3 +1,5 @@
+import os
+
 import neptune.new as neptune
 import torch
 
@@ -33,7 +35,9 @@ def test_best_model(run, best_trial):
     model_state, optimizer_state = torch.load(checkpoint_path)
     best_trained_model.load_state_dict(model_state)
 
-    _, test_set, _ = load_data()
+    _, test_set, _ = load_data(
+        os.path.abspath("/home/kamil/Documents/neptune/project-hpo-with-ray-tune/data")
+    )
 
     test_loader = torch.utils.data.DataLoader(
         test_set, batch_size=4, shuffle=False, num_workers=2)

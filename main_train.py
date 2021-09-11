@@ -49,8 +49,9 @@ def train_cifar(config, checkpoint_dir=None):
         net.load_state_dict(model_state)
         optimizer.load_state_dict(optimizer_state)
 
-    data_dir = os.path.abspath("/home/kamil/Documents/neptune/project-hpo-with-ray-tune/data")
-    train_set, test_set, classes = load_data(data_dir)
+    train_set, test_set, classes = load_data(
+        os.path.abspath("/home/kamil/Documents/neptune/project-hpo-with-ray-tune/data")
+    )
 
     test_abs = int(len(train_set) * 0.8)
     train_subset, val_subset = random_split(

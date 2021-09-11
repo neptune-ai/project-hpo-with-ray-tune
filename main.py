@@ -5,12 +5,13 @@
 import neptune.new as neptune
 from ray import tune
 
+from config import config
 from main_train import train_cifar
 from test_best_model import test_best_model
-from tune_config import config
 
 name = "hpo_cifar"
 
+# (neptune) create run
 master_run = neptune.init(
     project="common/project-hpo-with-ray-tune",
     tags=["master_run", name],
@@ -30,6 +31,7 @@ def main(cfg, num_samples):
         checkpoint_score_attr="min-loss",
     )
 
+    # (neptune) log best trial metadata
     master_run["best/config"] = result.best_config
     master_run["best/dataframe"].upload(neptune.types.File.as_html(result.best_dataframe))
     master_run["best/result"] = result.best_result
@@ -40,4 +42,4 @@ def main(cfg, num_samples):
 
 
 if __name__ == "__main__":
-    main(cfg=config, num_samples=4)
+    main(cfg=config, num_samples=2)
