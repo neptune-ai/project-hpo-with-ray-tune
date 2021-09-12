@@ -3,7 +3,6 @@
 # accessed 2021.09.11
 
 import neptune.new as neptune
-import numpy as np
 from ray import tune
 from ray.tune.schedulers import PopulationBasedTraining
 
@@ -17,7 +16,7 @@ class CustomStopper(tune.Stopper):
 
     def __call__(self, trial_id, result):
         max_iter = 100
-        if not self.should_stop and result["loss"] < 0.01:
+        if not self.should_stop and result["loss"] < 0.5:
             self.should_stop = True
         return self.should_stop or result["training_iteration"] >= max_iter
 
@@ -47,7 +46,7 @@ def main(cfg):
             hyperparam_mutations={
                 "lr": tune.loguniform(1e-4, 1e-1),
                 "batch_size": [2, 4, 8, 16, 32, 64, 128],
-                "momentum": lambda: np.random.uniform(low=0.8, high=0.99),
+                "momentum": [0.8, 0.85, 0.9, 0.95, 0.99],
             },
         ),
         config=cfg,
