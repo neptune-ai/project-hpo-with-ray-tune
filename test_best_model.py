@@ -7,8 +7,8 @@ from load_data import load_data
 from model import Net
 
 
-def test_best_model(run, best_trial):
-    best_trained_model = Net(best_trial.config["l1"], best_trial.config["l2"])
+def test_best_model(run):
+    best_trained_model = Net()
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     best_trained_model.to(device)
 
@@ -35,9 +35,7 @@ def test_best_model(run, best_trial):
     model_state, optimizer_state = torch.load(checkpoint_path)
     best_trained_model.load_state_dict(model_state)
 
-    _, test_set, _ = load_data(
-        os.path.abspath("/abs/path/to/data")
-    )
+    _, test_set, _ = load_data()
 
     test_loader = torch.utils.data.DataLoader(
         test_set, batch_size=4, shuffle=False, num_workers=4)

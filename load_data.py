@@ -16,7 +16,9 @@ class UnNormalize(object):
         return tensor
 
 
-def load_data(data_dir):
+def load_data():
+    data_dir = os.path.abspath("/home/kamil/Documents/neptune/project-hpo-with-ray-tune/data")
+
     classes = ("plane", "car", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck")
 
     transform = transforms.Compose([
