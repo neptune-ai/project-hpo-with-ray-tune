@@ -150,9 +150,11 @@ def train_cifar(config, checkpoint_dir=None):
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
 
+                # (neptune) log valid batch loss
                 loss = criterion(outputs, labels)
                 trial_run["trial"]["metrics/valid/batch/loss"].log(loss)
 
+                # (neptune) log valid batch acc
                 y_true = labels.cpu().numpy()
                 y_pred = outputs.argmax(axis=1).cpu().numpy()
                 trial_run["trial"]["metrics/valid/batch/accuracy"].log(accuracy_score(y_true, y_pred))
@@ -160,15 +162,15 @@ def train_cifar(config, checkpoint_dir=None):
                 val_loss += loss.cpu().numpy()
                 val_steps += 1
 
+        # (neptune) log valid epoch loss and acc
         trial_run["trial"]["metrics/valid/epoch/accuracy"].log(correct / total)
         trial_run["trial"]["metrics/valid/epoch/loss"].log(val_loss / val_steps)
 
         with tune.checkpoint_dir(step=epoch) as checkpoint_dir:
             path = os.path.join(checkpoint_dir, "checkpoint")
-            torch.save(
-                (net.state_dict(), optimizer.state_dict()),
-                path
-            )
+            torch.save((net.state_dict(), optimizer.state_dict()), path)
+
+            # (neptune) upload model checkpoint
             trial_run["trial"]["checkpoint"].upload(path)
 
         trial_run.wait()
